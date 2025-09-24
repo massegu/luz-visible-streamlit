@@ -38,7 +38,7 @@ if seccion == "Propiedades físicas de la luz azul":
     Aunque es parte del espectro visible, su exposición prolongada puede tener efectos sobre el **sueño, la fatiga visual y el ritmo circadiano**.
     """)
 
-modo_log = st.radio("Modo de visualización:", ["Escala visual (normalizada)", "Escala real (logarítmica)"])
+    modo_log = st.radio("Modo de visualización:", ["Escala visual (normalizada)", "Escala real (logarítmica)"])
 
     
    if modo_log == "Escala visual (normalizada)":
