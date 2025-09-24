@@ -152,49 +152,71 @@ elif seccion == "Visualización comparativa por color":
  # Sección 4
 
 elif seccion == "Analogía: luz azul vs ola del mar":
-    st.title("🌊🔵 Analogía: onda de luz vs ola del mar")
+    st.title("📏🔁 Relación entre longitud de onda y frecuencia")
 
     st.markdown("""
-    Esta visualización compara una **onda de luz** con una **ola del mar** para entender tres conceptos clave:
+    Esta visualización muestra cómo cambia la **frecuencia** de una onda de luz al modificar su **longitud de onda**.
 
-    - 📏 **Longitud de onda**: distancia entre crestas.
-    - 🔁 **Frecuencia**: número de ciclos por segundo.
-    - ⚡ **Energía**: proporcional a la frecuencia.
+    - 📏 Longitud de onda: distancia entre crestas.
+    - 🔁 Frecuencia: número de ciclos por segundo.
+    - ⚡ Energía: proporcional a la frecuencia.
 
-    Puedes modificar la longitud de onda de la luz para ver cómo cambia su frecuencia.
+    A menor longitud de onda, mayor frecuencia → más ciclos en el mismo espacio.
     """)
 
-    # Slider para longitud de onda de la luz (en nm)
+    # Slider para longitud de onda
     long_nm = st.slider("Longitud de onda de la luz (nm)", min_value=380, max_value=750, value=470, step=10)
     long_m = long_nm * 1e-9
-    frecuencia_luz = c / long_m
+    frecuencia = c / long_m
+    energia = h * frecuencia
 
-    # Parámetros simulados
+    # Onda simulada
     x = np.linspace(0, 4 * np.pi, 500)
-    freq_mar = 1.0
-    mar = np.sin(freq_mar * x)
-    luz = 0.3 * np.sin(frecuencia_luz / 1e15 * x)  # escala visual
+    ciclos_visibles = frecuencia / 1e15  # escala visual
+    onda = np.sin(ciclos_visibles * x)
 
-    fig, ax = plt.subplots(figsize=(10, 4))
-    ax.plot(x, mar, label='🌊 Ola del mar (frecuencia baja)', color='deepskyblue', linewidth=2)
-    ax.plot(x, luz, label=f'🔆 Onda de luz ({long_nm} nm)', color='orange', linewidth=1.5)
-    ax.set_title("Comparación de ondas: mar vs luz")
-    ax.set_xlabel("Espacio (simulado)")
-    ax.set_ylabel("Amplitud")
-    ax.legend()
-    ax.grid(True)
-    st.pyplot(fig)
+    fig1, ax1 = plt.subplots(figsize=(10, 4))
+    ax1.plot(x, onda, color='orange', linewidth=2)
+    ax1.set_title(f"Onda de luz simulada ({long_nm} nm)", fontsize=14)
+    ax1.set_xlabel("Espacio (simulado)")
+    ax1.set_ylabel("Amplitud")
+    ax1.grid(True)
+    st.pyplot(fig1)
+
+    # Gráfico de frecuencia vs longitud de onda
+    longitudes = np.linspace(380, 750, 100)
+    frecuencias = c / (longitudes * 1e-9)
+
+    fig2, ax2 = plt.subplots(figsize=(8, 3))
+    ax2.plot(longitudes, frecuencias / 1e14, color='blue')
+    ax2.axvline(long_nm, color='red', linestyle='--', label=f"{long_nm} nm")
+    ax2.set_title("Frecuencia vs Longitud de onda", fontsize=13)
+    ax2.set_xlabel("Longitud de onda (nm)")
+    ax2.set_ylabel("Frecuencia (×10¹⁴ Hz)")
+    ax2.legend()
+    ax2.grid(True)
+    st.pyplot(fig2)
 
     st.markdown(f"""
     ### 🔍 Observaciones
 
     - Longitud de onda seleccionada: **{long_nm} nm**
-    - Frecuencia calculada: **{frecuencia_luz:.2e} Hz**
-    - A mayor longitud de onda, menor frecuencia.
-    - La energía de la luz es proporcional a su frecuencia: **más frecuencia → más energía**.
+    - Frecuencia calculada: **{frecuencia:.2e} Hz**
+    - Energía del fotón: **{energia:.2e} J**
 
-    Esta analogía ayuda a visualizar cómo las ondas pueden compartir propiedades pero comportarse de forma muy distinta según el medio y la escala.
+    A medida que disminuye la longitud de onda, la frecuencia aumenta.  
+    Esto se traduce en **más ciclos por segundo** y **mayor energía por fotón**.
     """)
+
+    st.markdown("""
+    ### 🧪 Preguntas guiadas
+
+    1. ¿Qué ocurre con la frecuencia cuando la longitud de onda disminuye?
+    2. ¿Qué tipo de luz (roja o violeta) tiene más energía?
+    3. ¿Por qué la luz azul o violeta puede afectar más a la retina?
+    4. ¿Cómo se relaciona esto con los filtros de luz azul en pantallas?
+    """)
+
 
 
 
