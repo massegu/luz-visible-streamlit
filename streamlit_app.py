@@ -147,7 +147,9 @@ elif seccion == "Visualización comparativa por color":
     **⚡ Energía:** {energia:.2e} J  
     **🎨 Color percibido:** {color_seleccionado}
     """)
+    
  # Sección 4
+
 elif seccion == "Analogía: luz azul vs ola del mar":
     st.title("🌊🔵 Analogía: luz azul vs ola del mar")
 
@@ -161,14 +163,14 @@ elif seccion == "Analogía: luz azul vs ola del mar":
     Aunque ambas son ondas, la luz azul vibra millones de veces más rápido que una ola marina, y su energía por fotón es mucho mayor, aunque su tamaño físico sea diminuto.
     """)
 
-    # Parámetros simulados
+    # Sliders para ajustar frecuencia
+    freq_mar = st.slider("Frecuencia de la ola del mar (ciclos por tramo)", min_value=0.5, max_value=3.0, value=1.0, step=0.1)
+    freq_luz = st.slider("Frecuencia de la luz azul (ciclos por tramo)", min_value=5.0, max_value=50.0, value=20.0, step=1.0)
+
+    # Simulación de ondas
     x = np.linspace(0, 4 * np.pi, 500)
-
-    # Ola del mar: baja frecuencia, gran longitud de onda
-    mar = np.sin(x)
-
-    # Luz azul: alta frecuencia, pequeña longitud de onda (amplificada para visualización)
-    luz = 0.3 * np.sin(20 * x)
+    mar = np.sin(freq_mar * x)
+    luz = 0.3 * np.sin(freq_luz * x)
 
     fig, ax = plt.subplots(figsize=(10, 4))
     ax.plot(x, mar, label='🌊 Ola del mar', color='deepskyblue', linewidth=2)
@@ -180,12 +182,13 @@ elif seccion == "Analogía: luz azul vs ola del mar":
     ax.grid(True)
     st.pyplot(fig)
 
-    st.markdown("""
+    st.markdown(f"""
     **🔍 Observaciones:**
-    - La **ola del mar** tiene una longitud de onda grande y una frecuencia baja.
-    - La **luz azul** tiene una longitud de onda muy corta y una frecuencia altísima.
+    - La ola del mar tiene una frecuencia de **{freq_mar} ciclos** por tramo.
+    - La luz azul tiene una frecuencia de **{freq_luz} ciclos**, mucho más rápida.
     - La energía de la luz azul es mayor por fotón, aunque su amplitud física sea pequeña.
 
     Esta analogía ayuda a visualizar cómo las ondas pueden compartir propiedades pero comportarse de forma muy distinta según el medio y la escala.
     """)
+
 
