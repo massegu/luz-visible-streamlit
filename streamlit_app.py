@@ -26,6 +26,7 @@ seccion = st.sidebar.selectbox("📂 Navegación", [
     "Propiedades físicas de la luz azul",
     "Comparación: luz azul natural vs pantallas",
     "Visualización comparativa por color"
+    "Analogía: luz azul vs ola del mar"
 ])
 
 # Sección 1
@@ -82,9 +83,6 @@ if seccion == "Propiedades físicas de la luz azul":
     La energía de un fotón azul es del orden de \(10^{-19}\) julios, lo que la hace casi invisible en una escala lineal.  
     Por eso usamos escalas logarítmicas o normalizaciones para visualizarla junto a otras propiedades como la frecuencia o la longitud de onda.
     """)
-
-
-
 
 # Sección 2
 elif seccion == "Comparación: luz azul natural vs pantallas":
@@ -149,3 +147,45 @@ elif seccion == "Visualización comparativa por color":
     **⚡ Energía:** {energia:.2e} J  
     **🎨 Color percibido:** {color_seleccionado}
     """)
+ # Sección 4
+elif seccion == "Analogía: luz azul vs ola del mar":
+    st.title("🌊🔵 Analogía: luz azul vs ola del mar")
+
+    st.markdown("""
+    Esta visualización compara una **onda de luz azul** con una **ola del mar** para entender tres conceptos clave:
+
+    - 📏 **Longitud de onda**: distancia entre dos crestas consecutivas.
+    - 🔁 **Frecuencia**: número de ciclos por segundo.
+    - ⚡ **Energía**: intensidad de la onda (representada por la amplitud).
+
+    Aunque ambas son ondas, la luz azul vibra millones de veces más rápido que una ola marina, y su energía por fotón es mucho mayor, aunque su tamaño físico sea diminuto.
+    """)
+
+    # Parámetros simulados
+    x = np.linspace(0, 4 * np.pi, 500)
+
+    # Ola del mar: baja frecuencia, gran longitud de onda
+    mar = np.sin(x)
+
+    # Luz azul: alta frecuencia, pequeña longitud de onda (amplificada para visualización)
+    luz = 0.3 * np.sin(20 * x)
+
+    fig, ax = plt.subplots(figsize=(10, 4))
+    ax.plot(x, mar, label='🌊 Ola del mar', color='deepskyblue', linewidth=2)
+    ax.plot(x, luz, label='🔵 Luz azul (amplificada)', color='blue', linewidth=1.5)
+    ax.set_title("Comparación de ondas: mar vs luz azul")
+    ax.set_xlabel("Espacio (simulado)")
+    ax.set_ylabel("Amplitud")
+    ax.legend()
+    ax.grid(True)
+    st.pyplot(fig)
+
+    st.markdown("""
+    **🔍 Observaciones:**
+    - La **ola del mar** tiene una longitud de onda grande y una frecuencia baja.
+    - La **luz azul** tiene una longitud de onda muy corta y una frecuencia altísima.
+    - La energía de la luz azul es mayor por fotón, aunque su amplitud física sea pequeña.
+
+    Esta analogía ayuda a visualizar cómo las ondas pueden compartir propiedades pero comportarse de forma muy distinta según el medio y la escala.
+    """)
+
