@@ -25,7 +25,7 @@ valores_representativos = {
 seccion = st.sidebar.selectbox("📂 Navegación", [
     "Propiedades físicas de la luz azul",
     "Comparación: luz azul natural vs pantallas",
-    "Visualización comparativa por color"
+    "Visualización comparativa por color",
     "Analogía: luz azul vs ola del mar"
 ])
 
