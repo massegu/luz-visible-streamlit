@@ -152,31 +152,33 @@ elif seccion == "Visualización comparativa por color":
  # Sección 4
 
 elif seccion == "Analogía: luz azul vs ola del mar":
-    st.title("🌊🔵 Analogía: luz azul vs ola del mar")
+    st.title("🌊🔵 Analogía: onda de luz vs ola del mar")
 
     st.markdown("""
-    Esta visualización compara una **onda de luz azul** con una **ola del mar** para entender tres conceptos clave:
+    Esta visualización compara una **onda de luz** con una **ola del mar** para entender tres conceptos clave:
 
-    - 📏 **Longitud de onda**: distancia entre dos crestas consecutivas.
+    - 📏 **Longitud de onda**: distancia entre crestas.
     - 🔁 **Frecuencia**: número de ciclos por segundo.
-    - ⚡ **Energía**: intensidad de la onda (representada por la amplitud).
+    - ⚡ **Energía**: proporcional a la frecuencia.
 
-    Aunque ambas son ondas, la luz azul vibra millones de veces más rápido que una ola marina, y su energía por fotón es mucho mayor, aunque su tamaño físico sea diminuto.
+    Puedes modificar la longitud de onda de la luz para ver cómo cambia su frecuencia.
     """)
 
-    # Sliders para ajustar frecuencia
-    freq_mar = st.slider("Frecuencia de la ola del mar (ciclos por tramo)", min_value=0.5, max_value=3.0, value=1.0, step=0.1)
-    freq_luz = st.slider("Frecuencia de la luz azul (ciclos por tramo)", min_value=5.0, max_value=50.0, value=20.0, step=1.0)
+    # Slider para longitud de onda de la luz (en nm)
+    long_nm = st.slider("Longitud de onda de la luz (nm)", min_value=380, max_value=750, value=470, step=10)
+    long_m = long_nm * 1e-9
+    frecuencia_luz = c / long_m
 
-    # Simulación de ondas
+    # Parámetros simulados
     x = np.linspace(0, 4 * np.pi, 500)
+    freq_mar = 1.0
     mar = np.sin(freq_mar * x)
-    luz = 0.3 * np.sin(freq_luz * x)
+    luz = 0.3 * np.sin(frecuencia_luz / 1e15 * x)  # escala visual
 
     fig, ax = plt.subplots(figsize=(10, 4))
-    ax.plot(x, mar, label='🌊 Ola del mar', color='deepskyblue', linewidth=2)
-    ax.plot(x, luz, label='🔵 Luz azul (amplificada)', color='blue', linewidth=1.5)
-    ax.set_title("Comparación de ondas: mar vs luz azul")
+    ax.plot(x, mar, label='🌊 Ola del mar (frecuencia baja)', color='deepskyblue', linewidth=2)
+    ax.plot(x, luz, label=f'🔆 Onda de luz ({long_nm} nm)', color='orange', linewidth=1.5)
+    ax.set_title("Comparación de ondas: mar vs luz")
     ax.set_xlabel("Espacio (simulado)")
     ax.set_ylabel("Amplitud")
     ax.legend()
@@ -184,72 +186,17 @@ elif seccion == "Analogía: luz azul vs ola del mar":
     st.pyplot(fig)
 
     st.markdown(f"""
-    **🔍 Observaciones:**
-    - La ola del mar tiene una frecuencia de **{freq_mar} ciclos** por tramo.
-    - La luz azul tiene una frecuencia de **{freq_luz} ciclos**, mucho más rápida.
-    - La energía de la luz azul es mayor por fotón, aunque su amplitud física sea pequeña.
+    ### 🔍 Observaciones
+
+    - Longitud de onda seleccionada: **{long_nm} nm**
+    - Frecuencia calculada: **{frecuencia_luz:.2e} Hz**
+    - A mayor longitud de onda, menor frecuencia.
+    - La energía de la luz es proporcional a su frecuencia: **más frecuencia → más energía**.
 
     Esta analogía ayuda a visualizar cómo las ondas pueden compartir propiedades pero comportarse de forma muy distinta según el medio y la escala.
     """)
 
- #Sección 5
-elif seccion == "Comparación de ondas de luz por color":
-    st.title("🌈 Comparación de ondas de luz por color")
 
-    st.markdown("""
-    Esta visualización muestra cómo varían las ondas de luz según el color:  
-    - 📏 **Longitud de onda**: más corta en el violeta, más larga en el rojo.  
-    - 🔁 **Frecuencia**: más alta en el violeta, más baja en el rojo.  
-    - ⚡ **Energía**: mayor en el violeta, menor en el rojo.
 
-    Todas las ondas se muestran con la misma amplitud para evitar confundir energía con altura.
-    """)
-
-    # Parámetros físicos
-    colores = {
-        'Violeta': (400, '#8B00FF'),
-        'Azul': (470, '#0000FF'),
-        'Verde': (530, '#00FF00'),
-        'Amarillo': (580, '#FFFF00'),
-        'Naranja': (610, '#FFA500'),
-        'Rojo': (700, '#FF0000')
-    }
-
-    x = np.linspace(0, 4 * np.pi, 500)
-    fig, ax = plt.subplots(figsize=(10, 5))
-
-    for nombre, (long_nm, color_hex) in colores.items():
-        frecuencia = c / (long_nm * 1e-9)
-        onda = np.sin(frecuencia / 1e15 * x)  # escala visual
-        ax.plot(x, onda, label=nombre, color=color_hex)
-
-    ax.set_title("Ondas de luz por color (frecuencia relativa)")
-    ax.set_xlabel("Espacio (simulado)")
-    ax.set_ylabel("Amplitud (visual)")
-    ax.legend()
-    ax.grid(True)
-    st.pyplot(fig)
-
-    st.markdown("""
-    ### 🧪 Preguntas guiadas
-
-    1. **¿Qué color tiene la onda más apretada (más ciclos por tramo)?**  
-       _Observa la densidad de las ondas en el gráfico._
-
-    2. **¿Qué color tiene mayor energía por fotón?**  
-       _Recuerda que la energía es proporcional a la frecuencia._
-
-    3. **¿Por qué la luz azul o violeta puede afectar más a la retina que la roja?**  
-       _Piensa en la energía y la penetración de cada tipo de onda._
-
-    4. **¿Qué implicaciones tiene esto en el diseño de pantallas o iluminación?**  
-       _Considera el uso de filtros, modos nocturnos o luz cálida._
-
-    """)
-
-    st.markdown("""
-    🔍 **Nota:** Aunque todas las ondas se ven similares en amplitud, la energía real de cada fotón depende de su frecuencia, no de su altura visual.  
-    Por eso, el violeta transporta más energía que el rojo, aunque ambos parezcan igual de intensos en el gráfico.
-    """)
 
 
