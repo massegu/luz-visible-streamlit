@@ -40,14 +40,21 @@ if seccion == "Propiedades físicas de la luz azul":
 
     longitud_onda_nm = [450, 495]
     frecuencia_THz = [606, 668]
-    energia_eV = [2.5, 2.75]
+   # Cálculo de energía en julios
+    h = 6.626e-34  # J·s
+    c = 3e8        # m/s
+    longitudes_nm = [450, 495]
+    energias_J = [h * c / (l * 1e-9) for l in longitudes_nm]
 
     fig, ax = plt.subplots()
-    ax.bar(['Longitud de onda (nm)', 'Frecuencia (THz)', 'Energía (eV)'],
-           [sum(longitud_onda_nm)/2, sum(frecuencia_THz)/2, sum(energia_eV)/2],
-           color='blue')
+    ax.bar(['Longitud de onda (nm)', 'Frecuencia (THz)', 'Energía (J)'],
+       [sum(longitudes_nm)/2,
+        sum([c / (l * 1e-9) for l in longitudes_nm])/2 / 1e12,
+        sum(energias_J)/2],
+       color='blue')
     ax.set_title('Propiedades físicas de la luz azul')
     st.pyplot(fig)
+
 
 # Sección 2
 elif seccion == "Comparación: luz azul natural vs pantallas":
