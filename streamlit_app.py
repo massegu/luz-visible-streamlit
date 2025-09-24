@@ -46,6 +46,16 @@ freq_norm = frecuencia / 1e14
 energia_norm = energia / 1e-19
 long_norm = long_nm / 100
 
+st.markdown("""
+### 🔵 ¿Qué entendemos por luz azul?
+
+En este ejercicio, **la luz azul** hace referencia a la radiación visible emitida por **pantallas de teléfonos móviles, ordenadores, tabletas y televisores LED**.
+
+Esta luz tiene una **longitud de onda corta (450–495 nm)** y una **energía relativamente alta**, lo que la hace perceptible como azul brillante.  
+Aunque es parte del espectro visible, su exposición prolongada puede tener efectos sobre el **sueño, la fatiga visual y el ritmo circadiano**.
+
+""")
+
 # Visualización
 fig, ax = plt.subplots(figsize=(8, 4))
 ax.bar('Longitud de onda (λ)', long_norm, color='gray')
