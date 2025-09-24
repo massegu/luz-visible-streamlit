@@ -26,7 +26,8 @@ seccion = st.sidebar.selectbox("📂 Navegación", [
     "Propiedades físicas de la luz azul",
     "Comparación: luz azul natural vs pantallas",
     "Visualización comparativa por color",
-    "Analogía: luz azul vs ola del mar"
+    "Analogía: luz azul vs ola del mar",
+    "Comparación de ondas de luz por color"
 ])
 
 # Sección 1
@@ -190,5 +191,48 @@ elif seccion == "Analogía: luz azul vs ola del mar":
 
     Esta analogía ayuda a visualizar cómo las ondas pueden compartir propiedades pero comportarse de forma muy distinta según el medio y la escala.
     """)
+
+ #Sección 5
+elif seccion == "Comparación de ondas de luz por color":
+    st.title("🌈 Comparación de ondas de luz por color")
+
+    st.markdown("""
+    Esta visualización muestra cómo varían las ondas de luz según el color:  
+    - 📏 **Longitud de onda**: más corta en el violeta, más larga en el rojo.  
+    - 🔁 **Frecuencia**: más alta en el violeta, más baja en el rojo.  
+    - ⚡ **Energía**: mayor en el violeta, menor en el rojo.
+
+    Todas las ondas se muestran con la misma amplitud para evitar confundir energía con altura.
+    """)
+
+    # Parámetros físicos
+    colores = {
+        'Violeta': (400, '#8B00FF'),
+        'Azul': (470, '#0000FF'),
+        'Verde': (530, '#00FF00'),
+        'Amarillo': (580, '#FFFF00'),
+        'Naranja': (610, '#FFA500'),
+        'Rojo': (700, '#FF0000')
+    }
+
+    x = np.linspace(0, 4 * np.pi, 500)
+    fig, ax = plt.subplots(figsize=(10, 5))
+
+    for nombre, (long_nm, color_hex) in colores.items():
+        frecuencia = c / (long_nm * 1e-9)
+        onda = np.sin(frecuencia / 1e15 * x)  # escala visual
+        ax.plot(x, onda, label=nombre, color=color_hex)
+
+    ax.set_title("Ondas de luz por color (frecuencia relativa)")
+    ax.set_xlabel("Espacio (simulado)")
+    ax.set_ylabel("Amplitud (visual)")
+    ax.legend()
+    ax.grid(True)
+    st.pyplot(fig)
+
+    st.markdown("""
+    ### 🧪 Preguntas guiadas
+
+    1. **¿Qué color tiene la onda más
 
 
