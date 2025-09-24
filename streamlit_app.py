@@ -154,29 +154,27 @@ elif seccion == "Analogía: luz azul vs ola del mar":
     st.title("🌊🔵 Analogía: luz azul vs ola del mar")
 
     st.markdown("""
-    Esta visualización compara una **ola del mar** con una **onda de luz azul** para entender tres conceptos clave:
+    Esta visualización compara una **onda de luz azul** con una **ola del mar** para entender tres conceptos clave:
 
-    - 📏 **Longitud de onda**: distancia entre crestas.
+    - 📏 **Longitud de onda**: distancia entre dos crestas consecutivas.
     - 🔁 **Frecuencia**: número de ciclos por segundo.
-    - ⚡ **Energía**: proporcional a la frecuencia.
+    - ⚡ **Energía**: intensidad de la onda (representada por la amplitud).
 
-    Puedes modificar la **longitud de onda de la luz azul** para ver cómo cambia su frecuencia.
+    Aunque ambas son ondas, la luz azul vibra millones de veces más rápido que una ola marina, y su energía por fotón es mucho mayor, aunque su tamaño físico sea diminuto.
     """)
 
-    # Slider para longitud de onda de la luz azul
-    long_nm = st.slider("Longitud de onda de la luz azul (nm)", min_value=380, max_value=495, value=470, step=5)
-    long_m = long_nm * 1e-9
-    frecuencia_luz = c / long_m
-    energia_luz = h * frecuencia_luz
+    # Sliders para ajustar frecuencia
+    freq_mar = st.slider("Frecuencia de la ola del mar (ciclos por tramo)", min_value=0.5, max_value=3.0, value=1.0, step=0.1)
+    freq_luz = st.slider("Frecuencia de la luz azul (ciclos por tramo)", min_value=5.0, max_value=50.0, value=20.0, step=1.0)
 
     # Simulación de ondas
     x = np.linspace(0, 4 * np.pi, 500)
-    mar = np.sin(1.0 * x)  # frecuencia baja y fija
-    luz = 0.3 * np.sin((frecuencia_luz / 1e15) * x)  # frecuencia variable
+    mar = np.sin(freq_mar * x)
+    luz = 0.3 * np.sin(freq_luz * x)
 
     fig, ax = plt.subplots(figsize=(10, 4))
-    ax.plot(x, mar, label='🌊 Ola del mar (frecuencia baja)', color='deepskyblue', linewidth=2)
-    ax.plot(x, luz, label=f'🔵 Luz azul ({long_nm} nm)', color='blue', linewidth=1.5)
+    ax.plot(x, mar, label='🌊 Ola del mar', color='deepskyblue', linewidth=2)
+    ax.plot(x, luz, label='🔵 Luz azul (amplificada)', color='blue', linewidth=1.5)
     ax.set_title("Comparación de ondas: mar vs luz azul")
     ax.set_xlabel("Espacio (simulado)")
     ax.set_ylabel("Amplitud")
@@ -185,23 +183,11 @@ elif seccion == "Analogía: luz azul vs ola del mar":
     st.pyplot(fig)
 
     st.markdown(f"""
-    ### 🔍 Observaciones
+    **🔍 Observaciones:**
+    - La ola del mar tiene una frecuencia de **{freq_mar} ciclos** por tramo.
+    - La luz azul tiene una frecuencia de **{freq_luz} ciclos**, mucho más rápida.
+    - La energía de la luz azul es mayor por fotón, aunque su amplitud física sea pequeña.
 
-    - Longitud de onda seleccionada: **{long_nm} nm**
-    - Frecuencia calculada: **{frecuencia_luz:.2e} Hz**
-    - Energía del fotón: **{energia_luz:.2e} J**
-
-    A medida que disminuye la longitud de onda de la luz, su frecuencia aumenta.  
-    Esto se traduce en **más ciclos por segundo** y **mayor energía por fotón**.
-
-    La ola del mar permanece constante como referencia perceptiva.
+    Esta analogía ayuda a visualizar cómo las ondas pueden compartir propiedades pero comportarse de forma muy distinta según el medio y la escala.
     """)
 
-    st.markdown("""
-    ### 🧪 Preguntas guiadas
-
-    1. ¿Qué ocurre con la frecuencia de la luz azul cuando disminuyes su longitud de onda?
-    2. ¿Por qué la luz azul tiene más energía que la luz roja?
-    3. ¿Qué implicaciones tiene esto para la retina y los filtros de luz azul?
-    4. ¿Cómo se relaciona esta analogía con la percepción visual y el diseño de pantallas?
-    """)
