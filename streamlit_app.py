@@ -38,22 +38,45 @@ if seccion == "Propiedades físicas de la luz azul":
     Aunque es parte del espectro visible, su exposición prolongada puede tener efectos sobre el **sueño, la fatiga visual y el ritmo circadiano**.
     """)
 
+modo_log = st.radio("Modo de visualización:", ["Escala visual (normalizada)", "Escala real (logarítmica)"])
+
+    
+   if modo_log == "Escala visual (normalizada)":
+    # Datos normalizados
     longitud_onda_nm = [450, 495]
     frecuencia_THz = [606, 668]
-   # Cálculo de energía en julios
-    h = 6.626e-34  # J·s
-    c = 3e8        # m/s
-    longitudes_nm = [450, 495]
-    energias_J = [h * c / (l * 1e-9) for l in longitudes_nm]
+    energia_J = [h * c / (l * 1e-9) for l in longitud_onda_nm]
+    energia_norm = sum(energia_J)/2 / 1e-19
 
     fig, ax = plt.subplots()
     ax.bar(['Longitud de onda (nm)', 'Frecuencia (THz)', 'Energía (J)'],
-       [sum(longitudes_nm)/2,
-        sum([c / (l * 1e-9) for l in longitudes_nm])/2 / 1e12,
-        sum(energias_J)/2],
-       color='blue')
-    ax.set_title('Propiedades físicas de la luz azul')
+           [sum(longitud_onda_nm)/2,
+            sum(frecuencia_THz)/2,
+            energia_norm],
+           color='blue')
+    ax.set_title('Propiedades físicas de la luz azul (escaladas)')
     st.pyplot(fig)
+
+else:
+    # Datos reales con escala logarítmica
+    longitudes_nm = [450, 495]
+    frecuencias_Hz = [c / (l * 1e-9) for l in longitudes_nm]
+    energias_J = [h * f for f in frecuencias_Hz]
+
+    valores = [
+        sum(longitudes_nm)/2,
+        sum(frecuencias_Hz)/2,
+        sum(energias_J)/2
+    ]
+
+    labels = ['Longitud de onda (nm)', 'Frecuencia (Hz)', 'Energía (J)']
+
+    fig, ax = plt.subplots()
+    ax.bar(labels, valores, color='blue')
+    ax.set_yscale('log')
+    ax.set_title('Propiedades físicas de la luz azul (escala logarítmica)')
+    st.pyplot(fig)
+
 
 
 # Sección 2
