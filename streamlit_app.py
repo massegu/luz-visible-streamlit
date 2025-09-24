@@ -233,6 +233,23 @@ elif seccion == "Comparación de ondas de luz por color":
     st.markdown("""
     ### 🧪 Preguntas guiadas
 
-    1. **¿Qué color tiene la onda más
+    1. **¿Qué color tiene la onda más apretada (más ciclos por tramo)?**  
+       _Observa la densidad de las ondas en el gráfico._
+
+    2. **¿Qué color tiene mayor energía por fotón?**  
+       _Recuerda que la energía es proporcional a la frecuencia._
+
+    3. **¿Por qué la luz azul o violeta puede afectar más a la retina que la roja?**  
+       _Piensa en la energía y la penetración de cada tipo de onda._
+
+    4. **¿Qué implicaciones tiene esto en el diseño de pantallas o iluminación?**  
+       _Considera el uso de filtros, modos nocturnos o luz cálida._
+
+    """)
+
+    st.markdown("""
+    🔍 **Nota:** Aunque todas las ondas se ven similares en amplitud, la energía real de cada fotón depende de su frecuencia, no de su altura visual.  
+    Por eso, el violeta transporta más energía que el rojo, aunque ambos parezcan igual de intensos en el gráfico.
+    """)
 
 
